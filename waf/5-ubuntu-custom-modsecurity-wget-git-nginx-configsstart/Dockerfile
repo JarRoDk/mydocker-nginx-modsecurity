@@ -17,4 +17,4 @@ ADD crs-setup.conf /etc/nginx/rules/crs-setup.conf
 #
 CMD nginx -g 'daemon off;'
 
-EXPOSE 80
+EXPOSE 808

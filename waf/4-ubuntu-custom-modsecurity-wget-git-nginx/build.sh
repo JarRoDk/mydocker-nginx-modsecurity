@@ -7,4 +7,4 @@
 #
 
 
-docker build -t ubuntu-custom-modsecurity-wget-git-nginx . $* 
+docker build -t ubuntu-custom-modsecurity-wget-git-nginx . $*

@@ -1,4 +1,4 @@
-FROM ubuntu-custom-modsecurity-wget-git
+FROM ubuntu-custom-wget-git-modsecurity
 
 RUN useradd -s /bin/false nginx
 RUN mkdir /var/cache/nginx
@@ -6,7 +6,9 @@ RUN mkdir /usr/lib/nginx
 RUN chown nginx /usr/lib/nginx
 RUN chown nginx /var/cache/nginx
 #make nginx
-RUN tar xvzf nginx-1.12.0.tar.gz && cd /nginx-1.12.0 && ./configure \
+RUN tar xvzf nginx-1.12.0.tar.gz
+RUN cd nginx-1.12.0 && patch -p1 < /nginx_http_upstream_check_module/check.patch
+RUN cd /nginx-1.12.0 && ./configure \
 --prefix=/etc/nginx \
 --sbin-path=/usr/sbin/nginx \
 --modules-path=/usr/lib/nginx/modules \
@@ -46,7 +48,9 @@ RUN tar xvzf nginx-1.12.0.tar.gz && cd /nginx-1.12.0 && ./configure \
 --with-stream_realip_module \
 --with-stream_ssl_module \
 --with-stream_ssl_preread_module \
+--add-module=/ngx_upstream_status \
+--add-module=/nginx_upstream_check_modul \
 --add-module=/ModSecurity-nginx \
-&& make && make install
+&& make -j 8 && make install
 
 #--add-module=/root/nginx_upstream_check_module-maste\
