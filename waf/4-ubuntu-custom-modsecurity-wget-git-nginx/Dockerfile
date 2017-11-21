@@ -7,7 +7,7 @@ RUN chown nginx /usr/lib/nginx
 RUN chown nginx /var/cache/nginx
 #make nginx
 RUN tar xvzf nginx-1.12.0.tar.gz
-RUN cd nginx-1.12.0 && patch -p1 < /nginx_http_upstream_check_module/check.patch
+RUN cd nginx-1.12.0 && patch -p1 < /nginx_upstream_check_module/check_1.12.1+.patch
 RUN cd /nginx-1.12.0 && ./configure \
 --prefix=/etc/nginx \
 --sbin-path=/usr/sbin/nginx \
@@ -49,7 +49,7 @@ RUN cd /nginx-1.12.0 && ./configure \
 --with-stream_ssl_module \
 --with-stream_ssl_preread_module \
 --add-module=/ngx_upstream_status \
---add-module=/nginx_upstream_check_modul \
+--add-module=/nginx_upstream_check_module \
 --add-module=/ModSecurity-nginx \
 && make -j 8 && make install
 
